@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Employee</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="header">Employee Management System</div>
+    <nav>
+        <a href="./index.html">Home</a>
+        <a href="./about.html">About</a>
+        <a href="./search.html">Search</a>
+        <a href="./settings.html">Settings</a>
+        <a href="./add.html">Add Employee</a>
+        <a href="./manage.html">Manage</a>
+    </nav>
+
+    <div class="add-employee-container">
+        <div class="employee-form">
+            <h2>Add Employee</h2>
+            <input type="text" id="empName" placeholder="Enter Name">
+            <input type="text" id="empRole" placeholder="Enter Role">
+            <textarea id="empAbout" placeholder="About Employee"></textarea>
+            <button onclick="addEmployee()">Add Employee</button>
+        </div>
+    </div>
+
+    <script>
+        function addEmployee() {
+            let name = document.getElementById("empName").value;
+            let role = document.getElementById("empRole").value;
+            let about = document.getElementById("empAbout").value;
+            
+            if (!name || !role || !about) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            let employees = JSON.parse(localStorage.getItem("employees")) || [];
+            employees.push({ name, role, about });
+            localStorage.setItem("employees", JSON.stringify(employees));
+
+            window.location.href = "index.html"; // Redirect to home
+        }
+    </script>
+</body>
+</html>

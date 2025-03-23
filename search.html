@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Search</title>
+        <link rel="stylesheet" href="styles.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap" rel="stylesheet">
+    </head>
+    
+<body onload="loadEmployees()">
+    <div class="header">Employee Management System</div>
+    <nav>
+        <a href="./index.html">Home</a>
+        <a href="./about.html">About</a>
+        <a href="./search.html">Search</a>
+        <a href="./settings.html">Settings</a>
+        <a href="./add.html">Add Employee</a>
+        <a href="./manage.html">Manage</a>
+    </nav>
+
+    <h2>Search Employees</h2>
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Enter employee name..." oninput="searchEmployee()">
+    </div>
+    <div class="card-container" id="searchResults"></div>
+
+    <script>
+        function loadEmployees() {
+            let employees = JSON.parse(localStorage.getItem("employees")) || [];
+            displayEmployees(employees);
+        }
+
+        function searchEmployee() {
+            let query = document.getElementById("searchInput").value.toLowerCase();
+            let employees = JSON.parse(localStorage.getItem("employees")) || [];
+            let filtered = employees.filter(emp => emp.name.toLowerCase().includes(query));
+            displayEmployees(filtered);
+        }
+
+        function displayEmployees(employeeList) {
+            let list = document.getElementById("searchResults");
+            list.innerHTML = "";
+            employeeList.forEach(emp => {
+                let card = document.createElement("div");
+                card.classList.add("card");
+                card.innerHTML = `<img src='default.jpg' alt='Profile'><h3>${emp.name}</h3><p><b>${emp.role}</b></p><p>${emp.about}</p>`;
+                list.appendChild(card);
+            });
+        }
+    </script>
+</body>
+</html>
